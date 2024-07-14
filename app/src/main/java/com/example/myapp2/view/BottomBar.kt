@@ -1,6 +1,9 @@
 package com.example.myapp2.view
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -29,7 +32,7 @@ val bottomBarItems = arrayOf(
 fun BottomBar(selectedItem: Int, onSelectedItemChanged: (Int) -> Unit) {
 
     NavigationBar(
-        containerColor = Color.Transparent,
+        containerColor = Color.White
     ) {
         bottomBarItems.forEachIndexed { index, item ->
             NavigationBarItem(
