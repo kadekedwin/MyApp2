@@ -5,12 +5,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -73,16 +77,24 @@ fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
                 onValueChange = { inputTitle = it },
                 label = { Text(text = "Quiz Title") },
                 placeholder = { Text(text = "Science flashback") },
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier.fillMaxWidth()
             )
 
             Button(
                 modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonColors(
+                    contentColor = Color.White,
+                    containerColor = Color.Black,
+                    disabledContentColor = Color.White,
+                    disabledContainerColor = Color.Gray
+                ),
                 onClick = {
                     quizViewModel.insertQuiz(Quiz(title = inputTitle, icon = R.drawable.stationery))
-                    navController.navigate("quizScreen")
+                    navController.navigate("addQuestView")
                 }
-            ) { Text(text = "New Quiz") }
+            ) { Text(text = "New Quiz", modifier = Modifier.padding(vertical = 6.dp)) }
         }
     }
 }

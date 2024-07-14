@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Icon
@@ -31,6 +33,7 @@ fun QuizScreenNavigation(modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "quizScreen") {
         composable("quizScreen") { QuizScreen(modifier = modifier, navController = navController) }
         composable("addQuizView") { AddQuizView(modifier = modifier, navController = navController) }
+        composable("addQuestView") { AddQuestView(modifier = modifier, navController = navController) }
     }
 }
 
@@ -42,7 +45,10 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
     val quizChunked = quizViewModel.allQuiz.collectAsState().value.chunked(2)
 
     Column(
-        modifier = modifier.padding(horizontal = 24.dp).padding(vertical = 24.dp),
+        modifier = modifier
+            .padding(horizontal = 24.dp)
+            .padding(vertical = 24.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Surface(
@@ -59,7 +65,7 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
             text = "Your Quiz",
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = 20.dp)
+            modifier = Modifier.padding(top = 16.dp).padding()
         )
 
         Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
