@@ -15,9 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapp2.R
+import com.example.myapp2.model.LocalQuizViewModel
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    val quizViewModel = LocalQuizViewModel.current
+
     val name = "Edwin"
     val header = "Lorem ipsum dolor sit consectetur."
 

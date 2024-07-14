@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.myapp2.model.LocalDeviceViewModel
+import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.QuizApplication
 import com.example.myapp2.ui.theme.MyApp2Theme
 import com.example.myapp2.view.BottomBar
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
             var selectedBottomBarItem by remember { mutableIntStateOf(0) }
 
             MyApp2Theme {
-                CompositionLocalProvider(LocalDeviceViewModel provides quizViewModel) {
+                CompositionLocalProvider(LocalQuizViewModel provides quizViewModel) {
                     Scaffold(
                         modifier = Modifier.background(MaterialTheme.colorScheme.background),
                         bottomBar = { BottomBar(selectedItem = selectedBottomBarItem, onSelectedItemChanged = { selectedBottomBarItem = it }) }
