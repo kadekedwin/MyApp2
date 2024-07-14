@@ -1,16 +1,14 @@
-package com.example.myapp2.view
+package com.example.myapp2.view.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -76,5 +74,5 @@ fun QuizCardComponent(title: String, questionCount: Int, progress: Float, icon: 
 @Preview
 @Composable
 fun QuizCardComponentPreview() {
-    QuizCardComponent(title = "Testo for quizo", questionCount = 10, progress = 0.5f, icon = R.drawable.stationery, color = Color(0xff))
+    QuizCardComponent(title = "Testo for quizo", questionCount = 10, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
 }

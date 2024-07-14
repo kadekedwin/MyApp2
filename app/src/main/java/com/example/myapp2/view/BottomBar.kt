@@ -24,6 +24,7 @@ data class BottomBarItem(
 
 val bottomBarItems = arrayOf(
     BottomBarItem("Home", icon = R.drawable.house_icon),
+    BottomBarItem("Notifications", icon = R.drawable.grid_icon),
     BottomBarItem("Notifications", icon = R.drawable.bell_icon),
     BottomBarItem("Settings", icon = R.drawable.gear_icon)
 )

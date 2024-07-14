@@ -1,4 +1,4 @@
-package com.example.myapp2.view
+package com.example.myapp2.view.home
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement

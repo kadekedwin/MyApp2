@@ -1,5 +1,6 @@
 package com.example.myapp2.model
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Quiz(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val icon: Int
+    val icon: Int,
+//    val color: Color
 )
