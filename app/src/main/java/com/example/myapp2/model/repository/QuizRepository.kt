@@ -4,26 +4,22 @@ import androidx.lifecycle.LiveData
 import com.example.myapp2.model.dao.QuizDao
 import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
+import kotlinx.coroutines.flow.Flow
 
 class QuizRepository(private val quizDao: QuizDao) {
+    val allQuiz: Flow<List<Quiz>> = quizDao.getAll()
 
-    suspend fun getAll(): List<Quiz> {
-        return quizDao.getAll()
-    }
-
-    suspend fun insert(quiz: Quiz): Long {
+    suspend fun insertQuiz(quiz: Quiz): Long {
         return quizDao.insert(quiz)
     }
 
-    suspend fun delete(quiz: Quiz) {
+    suspend fun deleteQuiz(quiz: Quiz) {
         quizDao.delete(quiz)
     }
 
-    suspend fun getAllQuizWithQuests(): List<QuizWithQuests> {
-        return quizDao.getAllQuizWithQuests()
-    }
+    val allQuizWithQuests: Flow<List<QuizWithQuests>> = quizDao.getAllQuizWithQuests()
 
-    suspend fun getQuizWithQuests(quizId: Long): QuizWithQuests {
+    fun getQuizWithQuests(quizId: Long): Flow<QuizWithQuests?> {
         return quizDao.getQuizWithQuests(quizId)
     }
 }

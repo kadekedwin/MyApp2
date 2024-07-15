@@ -15,12 +15,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -49,7 +50,8 @@ fun QuizScreenNavigation(modifier: Modifier = Modifier) {
 fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
     val quizViewModel = LocalQuizViewModel.current
 
-    val quizChunked = quizViewModel.allQuiz.collectAsState().value.chunked(2)
+    val allQuiz by quizViewModel.allQuiz.collectAsStateWithLifecycle()
+    val allQuizChunked = allQuiz.chunked(2)
 
     Column(
         modifier = modifier
@@ -76,7 +78,7 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
         )
 
         Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            quizChunked.forEach {
+            allQuizChunked.forEach {
                 Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     it.forEach {
                         QuizEditCardComponent(it, modifier = Modifier.weight(1f), navController = navController)

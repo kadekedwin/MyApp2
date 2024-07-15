@@ -16,5 +16,6 @@ import androidx.room.PrimaryKey
 data class QuestOption(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val questId: Long,
-    val option: String
+    val option: String,
+    val isCorrect: Boolean
 )

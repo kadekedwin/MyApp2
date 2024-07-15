@@ -4,11 +4,10 @@ import com.example.myapp2.model.dao.QuestDao
 import com.example.myapp2.model.entity.Quest
 import com.example.myapp2.model.entity.QuestWithOptions
 import com.example.myapp2.model.entity.QuizWithQuests
+import kotlinx.coroutines.flow.Flow
 
 class QuestRepository(private val questDao: QuestDao) {
-    suspend fun getAll(): List<Quest> {
-        return questDao.getAll()
-    }
+    val allQuest: Flow<List<Quest>> = questDao.getAll()
 
     suspend fun insert(quest: Quest): Long {
         return questDao.insert(quest)
@@ -18,11 +17,9 @@ class QuestRepository(private val questDao: QuestDao) {
         questDao.delete(quest)
     }
 
-    suspend fun getAllQuestWithOptions(): List<QuestWithOptions> {
-        return questDao.getAllQuestWithOptions()
-    }
+    val allQuestWithOptions: Flow<List<QuestWithOptions>> = questDao.getAllQuestWithOptions()
 
-    suspend fun getQuestWithOptions(questId: Long): QuestWithOptions {
+    fun getQuestWithOptions(questId: Long): Flow<QuestWithOptions?> {
         return questDao.getQuestWithOptions(questId)
     }
 }

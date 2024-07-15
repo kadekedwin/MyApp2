@@ -8,11 +8,12 @@ import androidx.room.Transaction
 import com.example.myapp2.model.entity.Quest
 import com.example.myapp2.model.entity.QuestWithOptions
 import com.example.myapp2.model.entity.QuizWithQuests
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuestDao {
     @Query("SELECT * FROM quest")
-    suspend fun getAll(): List<Quest>
+    fun getAll(): Flow<List<Quest>>
 
     @Insert
     suspend fun insert(quest: Quest): Long
@@ -22,9 +23,9 @@ interface QuestDao {
 
     @Transaction
     @Query("SELECT * FROM quest")
-    suspend fun getAllQuestWithOptions(): List<QuestWithOptions>
+    fun getAllQuestWithOptions(): Flow<List<QuestWithOptions>>
 
     @Transaction
     @Query("SELECT * FROM quest WHERE id = :questId")
-    suspend fun getQuestWithOptions(questId: Long): QuestWithOptions
+    fun getQuestWithOptions(questId: Long): Flow<QuestWithOptions>
 }

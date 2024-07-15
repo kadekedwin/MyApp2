@@ -2,6 +2,7 @@ package com.example.myapp2.view.quiz
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -9,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -20,9 +22,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.myapp2.model.LocalQuestOptionViewModel
+import com.example.myapp2.model.LocalQuestViewModel
 import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.Quest
 import com.example.myapp2.model.entity.QuestOption
@@ -30,17 +35,26 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-    fun AddQuestionSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
-    val quizViewModel = LocalQuizViewModel.current
+fun AddQuestionSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
+    val questViewModel = LocalQuestViewModel.current
+    val questOptionViewModel = LocalQuestOptionViewModel.current
 
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
     var inputQuestion by remember { mutableStateOf("") }
+
     var optionCount by remember { mutableStateOf(3) }
+
     val inputOptions = remember {
         List(optionCount) {
             mutableStateOf("")
+        }
+    }
+
+    val inputCorrects = remember {
+        List(optionCount) {
+            mutableStateOf(false)
         }
     }
 
@@ -68,16 +82,27 @@ import kotlinx.coroutines.launch
                 modifier = Modifier.padding(top = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                inputOptions.forEachIndexed { index, input ->
-                    OutlinedTextField(
-                        value = input.value,
-                        onValueChange = { input.value = it },
-                        label = { Text(text = "Option $index") },
-                        placeholder = { Text(text = "Option $index") },
-                        shape = RoundedCornerShape(24.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    )
+
+                for (i in 0..<optionCount) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = inputCorrects[i].value,
+                            onCheckedChange = { inputCorrects[i].value = it }
+                        )
+
+                        OutlinedTextField(
+                            value = inputOptions[i].value,
+                            onValueChange = { inputOptions[i].value = it },
+                            label = { Text(text = "Option ${i+1}") },
+                            placeholder = { Text(text = "Option ${i+1}") },
+                            shape = RoundedCornerShape(24.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
+
             }
 
             Button(
@@ -106,9 +131,9 @@ import kotlinx.coroutines.launch
                     disabledContainerColor = Color.Gray
                 ),
                 onClick = {
-                    quizViewModel.insertQuest(Quest(quizId = quizId, question = inputQuestion), onRetreived = { questId ->
-                        inputOptions.forEachIndexed { index, input ->
-                            quizViewModel.insertQuestOption(QuestOption(questId = questId, option = input.value), onRetreived = {})
+                    questViewModel.insertQuest(Quest(quizId = quizId, question = inputQuestion), onRetreived = { questId ->
+                        for (i in 0..<optionCount) {
+                            questOptionViewModel.insertQuestOption(QuestOption(questId = questId, option = inputOptions[i].value, isCorrect = inputCorrects[i].value), onRetreived = {})
                         }
                     })
 

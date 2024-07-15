@@ -19,8 +19,6 @@ import com.example.myapp2.model.LocalQuizViewModel
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    val quizViewModel = LocalQuizViewModel.current
-
     val name = "Edwin"
     val header = "Lorem ipsum dolor sit consectetur."
 

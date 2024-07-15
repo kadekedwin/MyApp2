@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myapp2.model.entity.Quest
-import com.example.myapp2.model.entity.QuestOption
 import com.example.myapp2.model.entity.QuestWithOptions
-import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
 import com.example.myapp2.model.repository.QuestOptionRepository
 import com.example.myapp2.model.repository.QuestRepository
@@ -20,48 +18,46 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
-    private val _getQuizWithQuestsId = MutableStateFlow<Long?>(null)
-    fun getQuizWithQuestsId(quizId: Long) {
-        _getQuizWithQuestsId.value = quizId
+class QuestViewModel(private val questRepository: QuestRepository) : ViewModel() {
+    private val _getQuestWithOptionsId = MutableStateFlow<Long?>(null)
+    fun getQuestWithOptionsId(questId: Long) {
+        _getQuestWithOptionsId.value = questId
     }
 
     init {
     }
 
-    val allQuiz: StateFlow<List<Quiz>> = quizRepository.allQuiz
+    val allQuest: StateFlow<List<Quest>> = questRepository.allQuest
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
 
-    fun insertQuiz(quiz: Quiz, onRetreived: (Long) -> Unit) {
+    fun insertQuest(quest: Quest, onRetreived: (Long) -> Unit) {
         viewModelScope.launch {
-            onRetreived(quizRepository.insertQuiz(quiz))
+            onRetreived(questRepository.insert(quest))
         }
     }
 
-    fun deleteQuiz(quiz: Quiz) {
+    fun deleteQuest(quest: Quest) {
         viewModelScope.launch {
-            quizRepository.deleteQuiz(quiz)
+            questRepository.delete(quest)
         }
     }
 
-    val allQuizWithQuest: StateFlow<List<QuizWithQuests>> = quizRepository.allQuizWithQuests
+    val allQuestWithOptions: StateFlow<List<QuestWithOptions>> = questRepository.allQuestWithOptions
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
 
-    val getQuizWithQuests: StateFlow<QuizWithQuests?> = _getQuizWithQuestsId
+    val getQuestWithOptions: StateFlow<QuestWithOptions?> = _getQuestWithOptionsId
         .flatMapLatest { id ->
-            if (id != null) quizRepository.getQuizWithQuests(quizId = id)
+            if (id != null) questRepository.getQuestWithOptions(questId = id)
             else flowOf(null)
         }
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
-
 }
 
-
-class QuizViewModelFactory(private val quizRepository: QuizRepository) : ViewModelProvider.Factory {
+class QuestViewModelFactory(private val questRepository: QuestRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(QuestViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return QuizViewModel(quizRepository) as T
+            return QuestViewModel(questRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

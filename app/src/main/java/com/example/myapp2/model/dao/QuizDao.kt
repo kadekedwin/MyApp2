@@ -7,11 +7,12 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuizDao {
     @Query("SELECT * FROM quiz")
-    suspend fun getAll(): List<Quiz>
+    fun getAll(): Flow<List<Quiz>>
 
     @Insert
     suspend fun insert(quiz: Quiz): Long
@@ -21,9 +22,9 @@ interface QuizDao {
 
     @Transaction
     @Query("SELECT * FROM quiz")
-    suspend fun getAllQuizWithQuests(): List<QuizWithQuests>
+    fun getAllQuizWithQuests(): Flow<List<QuizWithQuests>>
 
     @Transaction
     @Query("SELECT * FROM quiz WHERE id = :quizId")
-    suspend fun getQuizWithQuests(quizId: Long): QuizWithQuests
+    fun getQuizWithQuests(quizId: Long): Flow<QuizWithQuests?>
 }

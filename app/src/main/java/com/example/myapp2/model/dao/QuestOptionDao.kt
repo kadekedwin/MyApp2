@@ -5,11 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.myapp2.model.entity.QuestOption
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuestOptionDao {
     @Query("SELECT * FROM quest_option")
-    suspend fun getAll(): List<QuestOption>
+    fun getAll(): Flow<List<QuestOption>>
 
     @Insert
     suspend fun insert(questOption: QuestOption): Long
