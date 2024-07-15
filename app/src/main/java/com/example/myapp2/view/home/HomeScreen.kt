@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapp2.R
-import com.example.myapp2.model.LocalQuizViewModel
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -47,8 +46,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            QuizCardComponent(title = "Moon based dump", questionCount = 19, progress = 0.3f, icon = R.drawable.stationery, color = Color(0xffffa500))
-            QuizCardComponent(title = "The world Biological", questionCount = 19, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
+            QuizCardHomeComponent(title = "Moon based dump", questionCount = 19, progress = 0.3f, icon = R.drawable.stationery, color = Color(0xffffa500))
+            QuizCardHomeComponent(title = "The world Biological", questionCount = 19, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
         }
 
         Column(modifier = Modifier.padding(horizontal = 24.dp)) {
@@ -60,21 +59,21 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     .padding(bottom = 20.dp)
             )
             Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                QuizListComponent(
+                QuizListHomeComponent(
                     title = "Test list quiz",
                     questionCount = 21,
                     progress = 0.2f,
                     icon = R.drawable.disc,
                     color = Color(0xff6f2da8)
                 )
-                QuizListComponent(
+                QuizListHomeComponent(
                     title = "Test list quiz",
                     questionCount = 21,
                     progress = 0.7f,
                     icon = R.drawable.disc,
                     color = Color(0xff6f2da8)
                 )
-                QuizListComponent(
+                QuizListHomeComponent(
                     title = "Test list quiz",
                     questionCount = 21,
                     progress = 0.4f,

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapp2.R
 
 @Composable
-fun QuizListComponent(title: String, questionCount: Int, progress: Float, icon: Int, color: Color) {
+fun QuizListHomeComponent(title: String, questionCount: Int, progress: Float, icon: Int, color: Color) {
     Surface(
         shape = RoundedCornerShape(24.dp),
         color = color.copy(alpha = 0.15f),
@@ -91,5 +91,5 @@ fun QuizListComponent(title: String, questionCount: Int, progress: Float, icon: 
 @Preview
 @Composable
 fun QuizListComponentPreview() {
-    QuizListComponent(title = "Science for kids", questionCount = 12, progress = 0.5f, icon = R.drawable.disc ,color = Color.Cyan)
+    QuizListHomeComponent(title = "Science for kids", questionCount = 12, progress = 0.5f, icon = R.drawable.disc ,color = Color.Cyan)
 }

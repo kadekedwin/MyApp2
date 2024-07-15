@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapp2.R
 
 @Composable
-fun QuizCardComponent(title: String, questionCount: Int, progress: Float, icon: Int, color: Color, modifier: Modifier = Modifier) {
+fun QuizCardHomeComponent(title: String, questionCount: Int, progress: Float, icon: Int, color: Color, modifier: Modifier = Modifier) {
     Surface(
         shape = RoundedCornerShape(24.dp),
         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
@@ -74,5 +74,5 @@ fun QuizCardComponent(title: String, questionCount: Int, progress: Float, icon: 
 @Preview
 @Composable
 fun QuizCardComponentPreview() {
-    QuizCardComponent(title = "Testo for quizo", questionCount = 10, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
+    QuizCardHomeComponent(title = "Testo for quizo", questionCount = 10, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
 }

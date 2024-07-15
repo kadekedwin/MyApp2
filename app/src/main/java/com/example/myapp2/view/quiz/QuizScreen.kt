@@ -61,7 +61,7 @@ fun QuizScreen(modifier: Modifier = Modifier) {
             allQuizChunked.forEach {
                 Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     it.forEach {
-                        QuizEditCardComponent(it, modifier = Modifier.weight(1f))
+                        QuizCardComponent(it, modifier = Modifier.weight(1f))
                     }
                 }
             }
