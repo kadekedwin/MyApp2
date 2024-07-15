@@ -22,9 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.myapp2.model.LocalQuizViewModel
 
 @Composable
@@ -33,7 +35,12 @@ fun QuizScreenNavigation(modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "quizScreen") {
         composable("quizScreen") { QuizScreen(modifier = modifier, navController = navController) }
         composable("addQuizView") { AddQuizView(modifier = modifier, navController = navController) }
-        composable("addQuestView") { AddQuestView(modifier = modifier, navController = navController) }
+        composable(
+            route = "addQuestView/{quizId}",
+            arguments = listOf(navArgument("quizId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            AddQuestView(modifier = modifier, navController = navController, backStackEntry.arguments!!.getInt("quizId"))
+        }
     }
 }
 
@@ -72,7 +79,7 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
             quizChunked.forEach {
                 Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     it.forEach {
-                        QuizEditCardComponent(title = it.title, questionCount = 10, icon = it.icon, color = Color.Blue, modifier = Modifier.weight(1f))
+                        QuizEditCardComponent(it, modifier = Modifier.weight(1f), navController = navController)
                     }
                 }
             }

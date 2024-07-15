@@ -5,10 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -35,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp2.R
 import com.example.myapp2.model.LocalQuizViewModel
-import com.example.myapp2.model.Quiz
+import com.example.myapp2.model.entity.Quiz
 
 @Composable
 fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
@@ -92,7 +90,7 @@ fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
                 ),
                 onClick = {
                     quizViewModel.insertQuiz(Quiz(title = inputTitle, icon = R.drawable.stationery))
-                    navController.navigate("addQuestView")
+                    navController.navigate("quizScreen")
                 }
             ) { Text(text = "New Quiz", modifier = Modifier.padding(vertical = 6.dp)) }
         }

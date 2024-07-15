@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.myapp2.model.LocalQuizViewModel
-import com.example.myapp2.model.QuizApplication
+import com.example.myapp2.model.application.AppApplication
 import com.example.myapp2.ui.theme.MyApp2Theme
 import com.example.myapp2.view.BottomBar
 import com.example.myapp2.view.home.HomeScreen
@@ -26,7 +26,7 @@ import com.example.myapp2.viewmodel.QuizViewModelFactory
 
 class MainActivity : ComponentActivity() {
     private val quizViewModel: QuizViewModel by viewModels {
-        QuizViewModelFactory((application as QuizApplication).repository)
+        QuizViewModelFactory((application as AppApplication).quizRepository, (application as AppApplication).questRepository, (application as AppApplication).questOptionRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,9 +1,12 @@
-package com.example.myapp2.model
+package com.example.myapp2.model.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import com.example.myapp2.model.entity.Quiz
+import com.example.myapp2.model.entity.QuizWithQuests
 
 @Dao
 interface QuizDao {
@@ -15,4 +18,8 @@ interface QuizDao {
 
     @Delete
     suspend fun delete(quiz: Quiz)
+
+    @Transaction
+    @Query("SELECT * FROM quiz WHERE id = :quizId")
+    suspend fun getQuizWithQuests(quizId: Int): QuizWithQuests
 }

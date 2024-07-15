@@ -37,11 +37,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapp2.R
+import com.example.myapp2.model.LocalQuizViewModel
+import com.example.myapp2.model.entity.Quiz
 
 @Composable
-fun QuizEditCardComponent(title: String, questionCount: Int, icon: Int, color: Color, modifier: Modifier = Modifier) {
-    var quizOption by remember { mutableStateOf(false) }
+fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier, navController: NavController) {
+    val quizViewModel = LocalQuizViewModel.current
+
+    var quizMenuDropdown by remember { mutableStateOf(false) }
+    val color = Color.Blue
+    val questionCount = 10
 
     Surface(
         shape = RoundedCornerShape(24.dp),
@@ -69,7 +76,7 @@ fun QuizEditCardComponent(title: String, questionCount: Int, icon: Int, color: C
 
                 ) {
                     Image(
-                        painter = painterResource(id = icon),
+                        painter = painterResource(id = quiz.icon),
                         contentDescription = null,
                         modifier = Modifier
                             .padding(10.dp)
@@ -77,13 +84,14 @@ fun QuizEditCardComponent(title: String, questionCount: Int, icon: Int, color: C
                 }
                 
                 IconButton(modifier = Modifier.align(Alignment.TopEnd).offset(20.dp, -20.dp), onClick = {
-                    quizOption = !quizOption
+                    quizMenuDropdown = !quizMenuDropdown
                 }) {
                     Icon(Icons.Rounded.MoreVert, contentDescription = null)
                 }
+
                 DropdownMenu(
-                    expanded = quizOption,
-                    onDismissRequest = { quizOption = false },
+                    expanded = quizMenuDropdown,
+                    onDismissRequest = { quizMenuDropdown = false },
                     offset = DpOffset(0.dp, -40.dp),
                     modifier = Modifier.background(Color.White),
                 ) {
@@ -94,7 +102,9 @@ fun QuizEditCardComponent(title: String, questionCount: Int, icon: Int, color: C
                                 Text("Edit")
                             }
                         },
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            navController.navigate("addQuestView/${quiz.id}")
+                        }
                     )
 
                     DropdownMenuItem(
@@ -104,19 +114,19 @@ fun QuizEditCardComponent(title: String, questionCount: Int, icon: Int, color: C
                                 Text("Delete")
                             }
                         },
-                        onClick = { /*TODO*/ }
+                        onClick = { quizViewModel.deleteQuiz(quiz) }
                     )
                 }
             }
 
-            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
+            Text(text = quiz.title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
             Text(text = "$questionCount Question", modifier = Modifier.padding(top = 8.dp))
         }
     }
 }
 
-@Preview
-@Composable
-fun QuizEditCardComponentPreview() {
-    QuizEditCardComponent(title = "Testo for quizo", questionCount = 10, icon = R.drawable.stationery, color = Color.Blue)
-}
+//@Preview
+//@Composable
+//fun QuizEditCardComponentPreview() {
+//    QuizEditCardComponent(Quiz(title = "Quiz Test", icon = R.drawable.stationery))
+//}
