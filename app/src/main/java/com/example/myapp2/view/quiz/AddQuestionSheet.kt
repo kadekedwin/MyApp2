@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddQuestionSheet(quizId: Int, showSheet: (Boolean) -> Unit) {
+    fun AddQuestionSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
     val quizViewModel = LocalQuizViewModel.current
 
     val sheetState = rememberModalBottomSheetState()
@@ -108,7 +108,7 @@ fun AddQuestionSheet(quizId: Int, showSheet: (Boolean) -> Unit) {
                 onClick = {
                     quizViewModel.insertQuest(Quest(quizId = quizId, question = inputQuestion), onRetreived = { questId ->
                         inputOptions.forEachIndexed { index, input ->
-                            quizViewModel.insertQuestOption(QuestOption(questId = questId.toInt(), option = input.value), onRetreived = {})
+                            quizViewModel.insertQuestOption(QuestOption(questId = questId, option = input.value), onRetreived = {})
                         }
                     })
 

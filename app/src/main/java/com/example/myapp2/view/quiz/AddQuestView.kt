@@ -38,7 +38,7 @@ import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
 
 @Composable
-fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, quizId: Int) {
+fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, quizId: Long) {
     val quizViewModel = LocalQuizViewModel.current
     val quizWithQuests by quizViewModel.quizWithQuests.collectAsState()
 

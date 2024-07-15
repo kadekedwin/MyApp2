@@ -19,7 +19,7 @@ class QuizRepository(private val quizDao: QuizDao) {
         quizDao.delete(quiz)
     }
 
-    suspend fun getQuizWithQuests(quizId: Int): QuizWithQuests {
+    suspend fun getQuizWithQuests(quizId: Long): QuizWithQuests {
         return quizDao.getQuizWithQuests(quizId)
     }
 }

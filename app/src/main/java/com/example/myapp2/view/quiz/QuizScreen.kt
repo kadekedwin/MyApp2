@@ -37,9 +37,9 @@ fun QuizScreenNavigation(modifier: Modifier = Modifier) {
         composable("addQuizView") { AddQuizView(modifier = modifier, navController = navController) }
         composable(
             route = "addQuestView/{quizId}",
-            arguments = listOf(navArgument("quizId") { type = NavType.IntType })
+            arguments = listOf(navArgument("quizId") { type = NavType.LongType })
         ) { backStackEntry ->
-            AddQuestView(modifier = modifier, navController = navController, backStackEntry.arguments!!.getInt("quizId"))
+            AddQuestView(modifier = modifier, navController = navController, backStackEntry.arguments!!.getLong("quizId"))
         }
     }
 }

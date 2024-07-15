@@ -55,7 +55,7 @@ class QuizViewModel(private val quizRepository: QuizRepository, private val ques
             getAllQuiz()
         }
     }
-    fun getQuizWithQuests(quizId: Int) {
+    fun getQuizWithQuests(quizId: Long) {
         viewModelScope.launch {
             _quizWithQuests.value = quizRepository.getQuizWithQuests(quizId)
         }
@@ -80,7 +80,7 @@ class QuizViewModel(private val quizRepository: QuizRepository, private val ques
             getAllQuest()
         }
     }
-    fun getQuestWithOption(questId: Int) {
+    fun getQuestWithOption(questId: Long) {
         viewModelScope.launch {
             _questWithOptions.value = questRepository.getQuestWithOptions(questId)
         }

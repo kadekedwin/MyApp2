@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
     )]
 )
 data class QuestOption(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val questId: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val questId: Long,
     val option: String
 )

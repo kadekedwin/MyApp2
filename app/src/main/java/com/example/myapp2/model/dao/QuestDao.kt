@@ -22,5 +22,5 @@ interface QuestDao {
 
     @Transaction
     @Query("SELECT * FROM quest WHERE id = :questId")
-    suspend fun getQuestWithOptions(questId: Int): QuestWithOptions
+    suspend fun getQuestWithOptions(questId: Long): QuestWithOptions
 }

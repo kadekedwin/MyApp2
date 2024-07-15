@@ -18,7 +18,7 @@ class QuestRepository(private val questDao: QuestDao) {
         questDao.delete(quest)
     }
 
-    suspend fun getQuestWithOptions(questId: Int): QuestWithOptions {
+    suspend fun getQuestWithOptions(questId: Long): QuestWithOptions {
         return questDao.getQuestWithOptions(questId)
     }
 }

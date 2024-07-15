@@ -21,5 +21,5 @@ interface QuizDao {
 
     @Transaction
     @Query("SELECT * FROM quiz WHERE id = :quizId")
-    suspend fun getQuizWithQuests(quizId: Int): QuizWithQuests
+    suspend fun getQuizWithQuests(quizId: Long): QuizWithQuests
 }
