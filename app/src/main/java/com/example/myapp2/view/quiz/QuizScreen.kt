@@ -22,32 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.myapp2.model.LocalNavController
 import com.example.myapp2.model.LocalQuizViewModel
 
 @Composable
-fun QuizScreenNavigation(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "quizScreen") {
-        composable("quizScreen") { QuizScreen(modifier = modifier, navController = navController) }
-        composable("addQuizView") { AddQuizView(modifier = modifier, navController = navController) }
-        composable(
-            route = "addQuestView/{quizId}",
-            arguments = listOf(navArgument("quizId") { type = NavType.LongType })
-        ) { backStackEntry ->
-            AddQuestView(modifier = modifier, navController = navController, backStackEntry.arguments!!.getLong("quizId"))
-        }
-    }
-}
-
-
-@Composable
-fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun QuizScreen(modifier: Modifier = Modifier) {
+    val navController = LocalNavController.current
     val quizViewModel = LocalQuizViewModel.current
 
     val allQuiz by quizViewModel.allQuiz.collectAsStateWithLifecycle()
@@ -65,7 +45,7 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
             shape = RoundedCornerShape(24.dp),
             color = Color.Gray.copy(alpha = 0.1f),
             border = BorderStroke(1.dp, color = Color.Gray.copy(alpha = 0.5f)),
-            onClick = { navController.navigate(route = "addQuizView") }
+            onClick = { navController.navigate("addQuizView") }
         ) {
             Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.padding(vertical = 24.dp))
         }
@@ -81,7 +61,7 @@ fun QuizScreen(modifier: Modifier = Modifier, navController: NavController) {
             allQuizChunked.forEach {
                 Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     it.forEach {
-                        QuizEditCardComponent(it, modifier = Modifier.weight(1f), navController = navController)
+                        QuizEditCardComponent(it, modifier = Modifier.weight(1f))
                     }
                 }
             }

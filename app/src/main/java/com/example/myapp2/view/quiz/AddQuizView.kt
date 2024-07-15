@@ -9,12 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,34 +23,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp2.R
+import com.example.myapp2.model.LocalNavController
 import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.Quiz
+import com.example.myapp2.view.TopBarComponent
 
 @Composable
-fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
+fun AddQuizView(modifier: Modifier = Modifier) {
+    val navController = LocalNavController.current
     val quizViewModel = LocalQuizViewModel.current
 
     var inputTitle by remember { mutableStateOf("") }
 
-    Column(modifier = modifier.padding(vertical = 24.dp).padding(horizontal = 24.dp)) {
-        Box(modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.AutoMirrored.Rounded.KeyboardArrowLeft, contentDescription = null, modifier = Modifier.align(Alignment.TopStart))
-            }
-            Text(
-                text = "Recent Goals",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
-        }
+    Column(
+        modifier = modifier
+            .padding(vertical = 24.dp)
+            .padding(horizontal = 24.dp)
+    ) {
         Box(
-            modifier = Modifier.fillMaxWidth().padding(top = 24.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.stationery),
@@ -68,7 +60,9 @@ fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
         }
 
         Column(
-            modifier = Modifier.padding(top = 24.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .fillMaxWidth()
         ) {
             OutlinedTextField(
                 value = inputTitle,
@@ -80,7 +74,9 @@ fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
             )
 
             Button(
-                modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonColors(
                     contentColor = Color.White,

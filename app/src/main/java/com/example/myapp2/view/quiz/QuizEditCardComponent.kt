@@ -39,11 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp2.R
+import com.example.myapp2.model.LocalNavController
 import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.Quiz
 
 @Composable
-fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier, navController: NavController) {
+fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
+    val navController = LocalNavController.current
     val quizViewModel = LocalQuizViewModel.current
 
     var quizMenuDropdown by remember { mutableStateOf(false) }
@@ -87,38 +89,37 @@ fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier, navControll
                     quizMenuDropdown = !quizMenuDropdown
                 }) {
                     Icon(Icons.Rounded.MoreVert, contentDescription = null)
-                }
 
-                DropdownMenu(
-                    expanded = quizMenuDropdown,
-                    onDismissRequest = { quizMenuDropdown = false },
-                    offset = DpOffset(0.dp, -40.dp),
-                    modifier = Modifier.background(Color.White),
-                ) {
-                    DropdownMenuItem(
-                        text = {
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Icon(Icons.Rounded.Edit, contentDescription = null)
-                                Text("Edit")
+                    DropdownMenu(
+                        expanded = quizMenuDropdown,
+                        onDismissRequest = { quizMenuDropdown = false },
+                        modifier = Modifier.background(Color.White),
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Rounded.Edit, contentDescription = null)
+                                    Text("Edit")
+                                }
+                            },
+                            onClick = {
+                                navController.navigate("addQuestView/${quiz.id}")
                             }
-                        },
-                        onClick = {
-                            navController.navigate("addQuestView/${quiz.id}")
-                        }
-                    )
+                        )
 
-                    DropdownMenuItem(
-                        text = {
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Icon(Icons.Rounded.Delete, contentDescription = null)
-                                Text("Delete")
+                        DropdownMenuItem(
+                            text = {
+                                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Rounded.Delete, contentDescription = null)
+                                    Text("Delete")
+                                }
+                            },
+                            onClick = {
+                                quizViewModel.deleteQuiz(quiz)
+                                quizMenuDropdown = false
                             }
-                        },
-                        onClick = {
-                            quizViewModel.deleteQuiz(quiz)
-                            quizMenuDropdown = false
-                        }
-                    )
+                        )
+                    }
                 }
             }
 
@@ -127,9 +128,3 @@ fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier, navControll
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun QuizEditCardComponentPreview() {
-//    QuizEditCardComponent(Quiz(title = "Quiz Test", icon = R.drawable.stationery))
-//}

@@ -36,9 +36,10 @@ import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.QuestOption
 import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
+import com.example.myapp2.view.TopBarComponent
 
 @Composable
-fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, quizId: Long) {
+fun AddQuestView(modifier: Modifier = Modifier, quizId: Long) {
     val quizViewModel = LocalQuizViewModel.current
 
     LaunchedEffect(quizId) {
@@ -55,6 +56,7 @@ fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, qu
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+
         quizWithQuests?.quests?.forEachIndexed { index, item ->
             QuestCardComponent(index = index, item = item)
         }
