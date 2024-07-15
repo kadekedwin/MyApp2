@@ -28,14 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.myapp2.model.LocalQuestOptionViewModel
 import com.example.myapp2.model.LocalQuestViewModel
-import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.Quest
 import com.example.myapp2.model.entity.QuestOption
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddQuestionSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
+fun AddQuestSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
     val questViewModel = LocalQuestViewModel.current
     val questOptionViewModel = LocalQuestOptionViewModel.current
 
