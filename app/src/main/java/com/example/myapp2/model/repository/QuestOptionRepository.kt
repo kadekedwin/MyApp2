@@ -8,11 +8,11 @@ class QuestOptionRepository(private val questOptionDao: QuestOptionDao) {
         return questOptionDao.getAll()
     }
 
-    suspend fun insert(questOption: QuestOption) {
-        questOptionDao.insert(questOption)
+    suspend fun insert(questOption: QuestOption): Long {
+        return questOptionDao.insert(questOption)
     }
 
-    suspend fun delete(questOption: QuestOption) {
+    suspend fun delete(questOption: QuestOption){
         questOptionDao.delete(questOption)
     }
 }

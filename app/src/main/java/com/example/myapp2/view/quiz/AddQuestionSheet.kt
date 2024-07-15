@@ -23,17 +23,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.myapp2.model.LocalQuizViewModel
+import com.example.myapp2.model.entity.Quest
+import com.example.myapp2.model.entity.QuestOption
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddQuestionSheet(showSheet: (Boolean) -> Unit) {
+fun AddQuestionSheet(quizId: Int, showSheet: (Boolean) -> Unit) {
+    val quizViewModel = LocalQuizViewModel.current
 
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
-    var optionCount by remember { mutableStateOf(3) }
     var inputQuestion by remember { mutableStateOf("") }
-//    var inputOptions by remember { mutableStateOf(arrayOf()) }
+    var optionCount by remember { mutableStateOf(3) }
+    val inputOptions = remember {
+        List(optionCount) {
+            mutableStateOf("")
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = {
@@ -59,12 +68,12 @@ fun AddQuestionSheet(showSheet: (Boolean) -> Unit) {
                 modifier = Modifier.padding(top = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                for (i in 0..optionCount) {
+                inputOptions.forEachIndexed { index, input ->
                     OutlinedTextField(
-                        value = inputQuestion,
-                        onValueChange = { inputQuestion = it },
-                        label = { Text(text = "Option $i") },
-                        placeholder = { Text(text = "Answer $i") },
+                        value = input.value,
+                        onValueChange = { input.value = it },
+                        label = { Text(text = "Option $index") },
+                        placeholder = { Text(text = "Option $index") },
                         shape = RoundedCornerShape(24.dp),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -97,7 +106,17 @@ fun AddQuestionSheet(showSheet: (Boolean) -> Unit) {
                     disabledContainerColor = Color.Gray
                 ),
                 onClick = {
+                    quizViewModel.insertQuest(Quest(quizId = quizId, question = inputQuestion), onRetreived = { questId ->
+                        inputOptions.forEachIndexed { index, input ->
+                            quizViewModel.insertQuestOption(QuestOption(questId = questId.toInt(), option = input.value), onRetreived = {})
+                        }
+                    })
 
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            showSheet(false)
+                        }
+                    }
                 }
             ) { Text(text = "Save", modifier = Modifier.padding(vertical = 6.dp)) }
         }

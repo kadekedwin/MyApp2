@@ -7,7 +7,7 @@ data class QuestWithOptions(
     @Embedded val quest: Quest,
     @Relation(
         parentColumn = "id",
-        entityColumn = "optionId"
+        entityColumn = "questId"
     )
     val options: List<QuestOption>
 )

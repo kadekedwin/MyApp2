@@ -14,7 +14,7 @@ interface QuizDao {
     suspend fun getAll(): List<Quiz>
 
     @Insert
-    suspend fun insert(quiz: Quiz)
+    suspend fun insert(quiz: Quiz): Long
 
     @Delete
     suspend fun delete(quiz: Quiz)

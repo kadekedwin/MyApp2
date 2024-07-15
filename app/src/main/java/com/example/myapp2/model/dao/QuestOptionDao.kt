@@ -12,7 +12,7 @@ interface QuestOptionDao {
     suspend fun getAll(): List<QuestOption>
 
     @Insert
-    suspend fun insert(questOption: QuestOption)
+    suspend fun insert(questOption: QuestOption): Long
 
     @Delete
     suspend fun delete(questOption: QuestOption)

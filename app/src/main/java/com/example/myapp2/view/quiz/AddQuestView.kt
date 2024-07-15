@@ -13,18 +13,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp2.R
 import com.example.myapp2.model.LocalQuizViewModel
@@ -35,6 +40,15 @@ import com.example.myapp2.model.entity.QuizWithQuests
 @Composable
 fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, quizId: Int) {
     val quizViewModel = LocalQuizViewModel.current
+    val quizWithQuests by quizViewModel.quizWithQuests.collectAsState()
+
+    quizViewModel.quizWithQuests.collectAsState()
+
+    LaunchedEffect(quizId) {
+        quizViewModel.getQuizWithQuests(quizId)
+
+
+    }
 
     var showAddQuestionSheet by remember { mutableStateOf(false) }
 
@@ -42,22 +56,30 @@ fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, qu
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .padding(vertical = 24.dp)
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        quizWithQuests?.quests?.forEach {
+            Surface(
+                shape = RoundedCornerShape(24.dp),
+                border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
+                color = Color.White,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
 
-        Surface(
-            shape = RoundedCornerShape(24.dp),
-            border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
-            color = Color.White,
-            modifier = modifier.fillMaxWidth(),
-            onClick = {
-
-            }
-        ) {
-            Column(
-                modifier = Modifier.padding(vertical = 24.dp)
+                }
             ) {
-                Text(text = "Test")
+                Column(
+                    modifier = Modifier.padding(24.dp)
+                ) {
+                    Text(
+                        text = it.question,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                    )
+                }
             }
         }
 
@@ -79,6 +101,6 @@ fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, qu
     }
 
     if(showAddQuestionSheet) {
-        AddQuestionSheet(showSheet = { showAddQuestionSheet = it })
+        AddQuestionSheet(quizId = quizId, showSheet = { showAddQuestionSheet = it })
     }
 }

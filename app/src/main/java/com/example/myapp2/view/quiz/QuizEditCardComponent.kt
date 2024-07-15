@@ -114,7 +114,10 @@ fun QuizEditCardComponent(quiz: Quiz, modifier: Modifier = Modifier, navControll
                                 Text("Delete")
                             }
                         },
-                        onClick = { quizViewModel.deleteQuiz(quiz) }
+                        onClick = {
+                            quizViewModel.deleteQuiz(quiz)
+                            quizMenuDropdown = false
+                        }
                     )
                 }
             }

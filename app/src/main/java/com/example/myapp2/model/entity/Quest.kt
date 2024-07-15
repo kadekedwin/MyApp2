@@ -16,5 +16,5 @@ import androidx.room.PrimaryKey
 data class Quest(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val quizId: Int,
-    val quest: String
+    val question: String
 )

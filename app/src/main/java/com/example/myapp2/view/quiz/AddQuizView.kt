@@ -89,7 +89,7 @@ fun AddQuizView(modifier: Modifier = Modifier, navController: NavController) {
                     disabledContainerColor = Color.Gray
                 ),
                 onClick = {
-                    quizViewModel.insertQuiz(Quiz(title = inputTitle, icon = R.drawable.stationery))
+                    quizViewModel.insertQuiz(Quiz(title = inputTitle, icon = R.drawable.stationery), onRetreived = {})
                     navController.navigate("quizScreen")
                 }
             ) { Text(text = "New Quiz", modifier = Modifier.padding(vertical = 6.dp)) }

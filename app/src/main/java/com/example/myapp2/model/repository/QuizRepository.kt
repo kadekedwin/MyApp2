@@ -11,8 +11,8 @@ class QuizRepository(private val quizDao: QuizDao) {
         return quizDao.getAll()
     }
 
-    suspend fun insert(quiz: Quiz) {
-        quizDao.insert(quiz)
+    suspend fun insert(quiz: Quiz): Long {
+        return quizDao.insert(quiz)
     }
 
     suspend fun delete(quiz: Quiz) {
