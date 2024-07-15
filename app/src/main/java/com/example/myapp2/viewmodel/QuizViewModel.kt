@@ -21,11 +21,15 @@ import kotlinx.coroutines.launch
 class QuizViewModel(private val quizRepository: QuizRepository, private val questRepository: QuestRepository, private val questOptionRepository: QuestOptionRepository) : ViewModel() {
     private val _allQuiz = MutableStateFlow<List<Quiz>>(emptyList())
     val allQuiz = _allQuiz.asStateFlow()
+    private val _allQuizWithQuests = MutableStateFlow<List<QuizWithQuests>>(emptyList())
+    val allQuizWithQuests = _allQuizWithQuests.asStateFlow()
     private val _quizWithQuests = MutableStateFlow<QuizWithQuests?>(null)
     val quizWithQuests = _quizWithQuests.asStateFlow()
 
     private val _allQuest = MutableStateFlow<List<Quest>>(emptyList())
     val allQuest = _allQuest.asStateFlow()
+    private val _allQuestWithOptions = MutableStateFlow<List<QuestWithOptions>>(emptyList())
+    val allQuestWithOptions = _allQuestWithOptions.asStateFlow()
     private val _questWithOptions = MutableStateFlow<QuestWithOptions?>(null)
     val questWithOptions = _questWithOptions.asStateFlow()
 
@@ -34,7 +38,9 @@ class QuizViewModel(private val quizRepository: QuizRepository, private val ques
 
     init {
         getAllQuiz()
+        getAllQuizWithQuest()
         getAllQuest()
+        getAllQuestWithOptions()
         getAllQuestOption()
     }
 
@@ -53,6 +59,11 @@ class QuizViewModel(private val quizRepository: QuizRepository, private val ques
         viewModelScope.launch {
             quizRepository.delete(quiz)
             getAllQuiz()
+        }
+    }
+    fun getAllQuizWithQuest() {
+        viewModelScope.launch {
+            _allQuizWithQuests.value = quizRepository.getAllQuizWithQuests()
         }
     }
     fun getQuizWithQuests(quizId: Long) {
@@ -78,6 +89,11 @@ class QuizViewModel(private val quizRepository: QuizRepository, private val ques
         viewModelScope.launch {
             questRepository.delete(quest)
             getAllQuest()
+        }
+    }
+    fun getAllQuestWithOptions() {
+        viewModelScope.launch {
+            _allQuestWithOptions.value = questRepository.getAllQuestWithOptions()
         }
     }
     fun getQuestWithOption(questId: Long) {

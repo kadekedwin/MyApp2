@@ -19,6 +19,10 @@ class QuizRepository(private val quizDao: QuizDao) {
         quizDao.delete(quiz)
     }
 
+    suspend fun getAllQuizWithQuests(): List<QuizWithQuests> {
+        return quizDao.getAllQuizWithQuests()
+    }
+
     suspend fun getQuizWithQuests(quizId: Long): QuizWithQuests {
         return quizDao.getQuizWithQuests(quizId)
     }

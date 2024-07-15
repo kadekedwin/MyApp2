@@ -40,14 +40,12 @@ import com.example.myapp2.model.entity.QuizWithQuests
 @Composable
 fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, quizId: Long) {
     val quizViewModel = LocalQuizViewModel.current
-    val quizWithQuests by quizViewModel.quizWithQuests.collectAsState()
 
-    quizViewModel.quizWithQuests.collectAsState()
+    val quizWithQuests by quizViewModel.quizWithQuests.collectAsState()
+    val allQuest by quizViewModel.allQuestOption.collectAsState()
 
     LaunchedEffect(quizId) {
         quizViewModel.getQuizWithQuests(quizId)
-
-
     }
 
     var showAddQuestionSheet by remember { mutableStateOf(false) }
@@ -59,7 +57,7 @@ fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, qu
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        quizWithQuests?.quests?.forEach {
+        quizWithQuests?.quests?.forEachIndexed { index, item ->
             Surface(
                 shape = RoundedCornerShape(24.dp),
                 border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
@@ -72,13 +70,14 @@ fun AddQuestView(modifier: Modifier = Modifier, navController: NavController, qu
                 Column(
                     modifier = Modifier.padding(24.dp)
                 ) {
+                    Text(text = "Quest ${index+1}")
                     Text(
-                        text = it.question,
+                        text = item.question,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 20.dp)
                     )
+                    HorizontalDivider(modifier = Modifier.padding(10.dp))
+                    Text(text = "option")
                 }
             }
         }
