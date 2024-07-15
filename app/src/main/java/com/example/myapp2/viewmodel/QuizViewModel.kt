@@ -44,7 +44,7 @@ class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
         }
     }
 
-    val allQuizWithQuest: StateFlow<List<QuizWithQuests>> = quizRepository.allQuizWithQuests
+    val allQuizWithQuests: StateFlow<List<QuizWithQuests>> = quizRepository.allQuizWithQuests
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
 
     val getQuizWithQuests: StateFlow<QuizWithQuests?> = _getQuizWithQuestsId
