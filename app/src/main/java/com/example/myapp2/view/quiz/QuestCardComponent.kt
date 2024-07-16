@@ -19,16 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapp2.model.LocalQuestViewModel
 import com.example.myapp2.model.entity.Quest
+import com.example.myapp2.model.entity.QuestWithOptions
 
 @Composable
-fun QuestCardComponent(index: Int, item: Quest) {
-    val questViewModel = LocalQuestViewModel.current
-
-    LaunchedEffect(item.id) {
-        questViewModel.getQuestWithOptionsId(item.id)
-    }
-
-    val questWithOptions by questViewModel.getQuestWithOptions.collectAsState()
+fun QuestCardComponent(index: Int, item: QuestWithOptions) {
 
     Surface(
         shape = RoundedCornerShape(24.dp),
@@ -44,13 +38,13 @@ fun QuestCardComponent(index: Int, item: Quest) {
         ) {
             Text(text = "Quest ${index+1}")
             Text(
-                text = item.quest,
+                text = item.quest.quest,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp))
 
-            questWithOptions?.options?.forEachIndexed { index, item ->
+            item?.options?.forEachIndexed { index, item ->
                 Text(text = "${index+1}. ${item.option}")
             }
         }

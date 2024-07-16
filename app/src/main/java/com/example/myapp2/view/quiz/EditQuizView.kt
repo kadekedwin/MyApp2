@@ -27,9 +27,9 @@ fun EditQuizView(modifier: Modifier = Modifier, quizId: Long) {
     val quizViewModel = LocalQuizViewModel.current
 
     LaunchedEffect(quizId) {
-        quizViewModel.getQuizWithQuestsId(quizId)
+        quizViewModel.getQuizWithQuestsAndOptionsId(quizId)
     }
-    val quizWithQuests by quizViewModel.getQuizWithQuests.collectAsState()
+    val quizWithQuestsAndOptions by quizViewModel.getQuizWithQuestsAndOptions.collectAsState()
 
     var showAddQuestionSheet by remember { mutableStateOf(false) }
 
@@ -41,7 +41,7 @@ fun EditQuizView(modifier: Modifier = Modifier, quizId: Long) {
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
-        quizWithQuests?.quests?.forEachIndexed { index, item ->
+        quizWithQuestsAndOptions?.quests?.forEachIndexed { index, item ->
             QuestCardComponent(index = index, item = item)
         }
 

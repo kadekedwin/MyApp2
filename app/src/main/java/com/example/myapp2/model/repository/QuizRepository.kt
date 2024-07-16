@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.myapp2.model.dao.QuizDao
 import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
+import com.example.myapp2.model.entity.QuizWithQuestsAndOptions
 import kotlinx.coroutines.flow.Flow
 
 class QuizRepository(private val quizDao: QuizDao) {
@@ -21,5 +22,9 @@ class QuizRepository(private val quizDao: QuizDao) {
 
     fun getQuizWithQuests(quizId: Long): Flow<QuizWithQuests?> {
         return quizDao.getQuizWithQuests(quizId)
+    }
+
+    fun getQuizWithQuestsAndOptions(quizId: Long): Flow<QuizWithQuestsAndOptions?> {
+        return quizDao.getQuizWithQuestsAndOptions(quizId)
     }
 }

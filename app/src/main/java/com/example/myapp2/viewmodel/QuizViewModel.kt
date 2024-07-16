@@ -8,6 +8,7 @@ import com.example.myapp2.model.entity.QuestOption
 import com.example.myapp2.model.entity.QuestWithOptions
 import com.example.myapp2.model.entity.Quiz
 import com.example.myapp2.model.entity.QuizWithQuests
+import com.example.myapp2.model.entity.QuizWithQuestsAndOptions
 import com.example.myapp2.model.repository.QuestOptionRepository
 import com.example.myapp2.model.repository.QuestRepository
 import com.example.myapp2.model.repository.QuizRepository
@@ -22,8 +23,12 @@ import kotlinx.coroutines.launch
 
 class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
     private val _getQuizWithQuestsId = MutableStateFlow<Long?>(null)
+    private val _getQuizWithQuestsAndOptionsId = MutableStateFlow<Long?>(null)
     fun getQuizWithQuestsId(quizId: Long) {
         _getQuizWithQuestsId.value = quizId
+    }
+    fun getQuizWithQuestsAndOptionsId(quizId: Long) {
+        _getQuizWithQuestsAndOptionsId.value = quizId
     }
 
     init {
@@ -53,6 +58,13 @@ class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
             else flowOf(null)
         }
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
+
+    val getQuizWithQuestsAndOptions: StateFlow<QuizWithQuestsAndOptions?> = _getQuizWithQuestsAndOptionsId
+        .flatMapLatest { id ->
+        if (id != null) quizRepository.getQuizWithQuestsAndOptions(quizId = id)
+        else flowOf(null)
+    }
+    .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
 
 }
 
