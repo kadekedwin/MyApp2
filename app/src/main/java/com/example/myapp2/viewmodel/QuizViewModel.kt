@@ -22,17 +22,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
-    private val _getQuizWithQuestsId = MutableStateFlow<Long?>(null)
     private val _getQuizWithQuestsAndOptionsId = MutableStateFlow<Long?>(null)
-    fun getQuizWithQuestsId(quizId: Long) {
-        _getQuizWithQuestsId.value = quizId
-    }
     fun getQuizWithQuestsAndOptionsId(quizId: Long) {
         _getQuizWithQuestsAndOptionsId.value = quizId
     }
 
-    init {
-    }
 
     val allQuiz: StateFlow<List<Quiz>> = quizRepository.allQuiz
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
@@ -49,22 +43,12 @@ class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
         }
     }
 
-    val allQuizWithQuests: StateFlow<List<QuizWithQuests>> = quizRepository.allQuizWithQuests
-        .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
-
-    val getQuizWithQuests: StateFlow<QuizWithQuests?> = _getQuizWithQuestsId
+    val getQuizWithQuestsAndOptions: StateFlow<QuizWithQuestsAndOptions?> = _getQuizWithQuestsAndOptionsId
         .flatMapLatest { id ->
-            if (id != null) quizRepository.getQuizWithQuests(quizId = id)
+            if (id != null) quizRepository.getQuizWithQuestsAndOptions(quizId = id)
             else flowOf(null)
         }
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
-
-    val getQuizWithQuestsAndOptions: StateFlow<QuizWithQuestsAndOptions?> = _getQuizWithQuestsAndOptionsId
-        .flatMapLatest { id ->
-        if (id != null) quizRepository.getQuizWithQuestsAndOptions(quizId = id)
-        else flowOf(null)
-    }
-    .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
 
 }
 

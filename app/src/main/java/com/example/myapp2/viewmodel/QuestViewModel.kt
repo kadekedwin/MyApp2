@@ -19,13 +19,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class QuestViewModel(private val questRepository: QuestRepository) : ViewModel() {
-    private val _getQuestWithOptionsId = MutableStateFlow<Long?>(null)
-    fun getQuestWithOptionsId(questId: Long) {
-        _getQuestWithOptionsId.value = questId
-    }
-
-    init {
-    }
 
     val allQuest: StateFlow<List<Quest>> = questRepository.allQuest
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
@@ -41,16 +34,6 @@ class QuestViewModel(private val questRepository: QuestRepository) : ViewModel()
             questRepository.delete(quest)
         }
     }
-
-    val allQuestWithOptions: StateFlow<List<QuestWithOptions>> = questRepository.allQuestWithOptions
-        .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
-
-    val getQuestWithOptions: StateFlow<QuestWithOptions?> = _getQuestWithOptionsId
-        .flatMapLatest { id ->
-            if (id != null) questRepository.getQuestWithOptions(questId = id)
-            else flowOf(null)
-        }
-        .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = null)
 }
 
 class QuestViewModelFactory(private val questRepository: QuestRepository) : ViewModelProvider.Factory {

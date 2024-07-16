@@ -20,12 +20,4 @@ interface QuestDao {
 
     @Delete
     suspend fun delete(quest: Quest)
-
-    @Transaction
-    @Query("SELECT * FROM quest")
-    fun getAllQuestWithOptions(): Flow<List<QuestWithOptions>>
-
-    @Transaction
-    @Query("SELECT * FROM quest WHERE id = :questId")
-    fun getQuestWithOptions(questId: Long): Flow<QuestWithOptions>
 }

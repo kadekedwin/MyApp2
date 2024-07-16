@@ -15,9 +15,6 @@ import kotlinx.coroutines.launch
 
 class QuestOptionViewModel(private val questOptionRepository: QuestOptionRepository) : ViewModel() {
 
-    init {
-    }
-
     val allQuestOption: StateFlow<List<QuestOption>> = questOptionRepository.allQuestOption
         .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
 

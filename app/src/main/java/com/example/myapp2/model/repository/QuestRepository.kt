@@ -16,10 +16,4 @@ class QuestRepository(private val questDao: QuestDao) {
     suspend fun delete(quest: Quest) {
         questDao.delete(quest)
     }
-
-    val allQuestWithOptions: Flow<List<QuestWithOptions>> = questDao.getAllQuestWithOptions()
-
-    fun getQuestWithOptions(questId: Long): Flow<QuestWithOptions?> {
-        return questDao.getQuestWithOptions(questId)
-    }
 }

@@ -18,12 +18,6 @@ class QuizRepository(private val quizDao: QuizDao) {
         quizDao.delete(quiz)
     }
 
-    val allQuizWithQuests: Flow<List<QuizWithQuests>> = quizDao.getAllQuizWithQuests()
-
-    fun getQuizWithQuests(quizId: Long): Flow<QuizWithQuests?> {
-        return quizDao.getQuizWithQuests(quizId)
-    }
-
     fun getQuizWithQuestsAndOptions(quizId: Long): Flow<QuizWithQuestsAndOptions?> {
         return quizDao.getQuizWithQuestsAndOptions(quizId)
     }
