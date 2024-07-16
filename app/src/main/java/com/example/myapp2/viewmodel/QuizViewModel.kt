@@ -43,6 +43,9 @@ class QuizViewModel(private val quizRepository: QuizRepository) : ViewModel() {
         }
     }
 
+    val allQuizWithQuestsAndOptions: StateFlow<List<QuizWithQuestsAndOptions>> = quizRepository.allQuizWithQuestsAndOptions
+        .stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = emptyList())
+
     val getQuizWithQuestsAndOptions: StateFlow<QuizWithQuestsAndOptions?> = _getQuizWithQuestsAndOptionsId
         .flatMapLatest { id ->
             if (id != null) quizRepository.getQuizWithQuestsAndOptions(quizId = id)

@@ -38,15 +38,17 @@ import androidx.compose.ui.unit.sp
 import com.example.myapp2.model.LocalNavController
 import com.example.myapp2.model.LocalQuizViewModel
 import com.example.myapp2.model.entity.Quiz
+import com.example.myapp2.model.entity.QuizWithQuests
+import com.example.myapp2.model.entity.QuizWithQuestsAndOptions
 
 @Composable
-fun QuizCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
+fun QuizCardComponent(quizWithQuestsAndOptions: QuizWithQuestsAndOptions, modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val quizViewModel = LocalQuizViewModel.current
 
     var quizMenuDropdown by remember { mutableStateOf(false) }
+
     val color = Color.Blue
-    val questionCount = 10
 
     Surface(
         shape = RoundedCornerShape(24.dp),
@@ -74,7 +76,7 @@ fun QuizCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
 
                 ) {
                     Image(
-                        painter = painterResource(id = quiz.icon),
+                        painter = painterResource(id = quizWithQuestsAndOptions.quiz.icon),
                         contentDescription = null,
                         modifier = Modifier
                             .padding(10.dp)
@@ -99,7 +101,7 @@ fun QuizCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
                                 }
                             },
                             onClick = {
-                                navController.navigate("addQuestView/${quiz.id}")
+                                navController.navigate("addQuestView/${quizWithQuestsAndOptions.quiz.id}")
                             }
                         )
 
@@ -111,7 +113,7 @@ fun QuizCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
                                 }
                             },
                             onClick = {
-                                quizViewModel.deleteQuiz(quiz)
+                                quizViewModel.deleteQuiz(quizWithQuestsAndOptions.quiz)
                                 quizMenuDropdown = false
                             }
                         )
@@ -119,8 +121,8 @@ fun QuizCardComponent(quiz: Quiz, modifier: Modifier = Modifier) {
                 }
             }
 
-            Text(text = quiz.title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
-            Text(text = "$questionCount Question", modifier = Modifier.padding(top = 8.dp))
+            Text(text = quizWithQuestsAndOptions.quiz.title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
+            Text(text = "${quizWithQuestsAndOptions.quests.size} Question", modifier = Modifier.padding(top = 8.dp))
         }
     }
 }

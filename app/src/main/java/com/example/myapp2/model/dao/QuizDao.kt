@@ -22,6 +22,10 @@ interface QuizDao {
     suspend fun delete(quiz: Quiz)
 
     @Transaction
+    @Query("SELECT * FROM quiz")
+    fun getAllQuizWithQuestsAndOptions(): Flow<List<QuizWithQuestsAndOptions>>
+
+    @Transaction
     @Query("SELECT * FROM quiz WHERE id = :quizId")
     fun getQuizWithQuestsAndOptions(quizId: Long): Flow<QuizWithQuestsAndOptions?>
 }

@@ -30,8 +30,8 @@ fun QuizScreen(modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val quizViewModel = LocalQuizViewModel.current
 
-    val allQuiz by quizViewModel.allQuiz.collectAsStateWithLifecycle()
-    val allQuizChunked = allQuiz.chunked(2)
+    val allQuizWithQuestsAndOptions by quizViewModel.allQuizWithQuestsAndOptions.collectAsStateWithLifecycle()
+    val allQuizWithQuestsAndOptionsChunked = allQuizWithQuestsAndOptions.chunked(2)
 
     Column(
         modifier = modifier
@@ -54,11 +54,13 @@ fun QuizScreen(modifier: Modifier = Modifier) {
             text = "Your Quiz",
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(top = 16.dp).padding()
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .padding()
         )
 
         Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            allQuizChunked.forEach {
+            allQuizWithQuestsAndOptionsChunked.forEach {
                 Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     it.forEach {
                         QuizCardComponent(it, modifier = Modifier.weight(1f))
