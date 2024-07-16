@@ -44,7 +44,7 @@ fun QuestCardComponent(index: Int, item: Quest) {
         ) {
             Text(text = "Quest ${index+1}")
             Text(
-                text = item.question,
+                text = item.quest,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
             )

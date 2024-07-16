@@ -130,7 +130,7 @@ fun AddQuestSheet(quizId: Long, showSheet: (Boolean) -> Unit) {
                     disabledContainerColor = Color.Gray
                 ),
                 onClick = {
-                    questViewModel.insertQuest(Quest(quizId = quizId, question = inputQuestion), onRetreived = { questId ->
+                    questViewModel.insertQuest(Quest(quizId = quizId, quest = inputQuestion), onRetreived = { questId ->
                         for (i in 0..<optionCount) {
                             questOptionViewModel.insertQuestOption(QuestOption(questId = questId, option = inputOptions[i].value, isCorrect = inputCorrects[i].value), onRetreived = {})
                         }
