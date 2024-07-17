@@ -48,8 +48,6 @@ fun QuizCardComponent(quizWithQuestsAndOptions: QuizWithQuestsAndOptions, modifi
 
     var quizMenuDropdown by remember { mutableStateOf(false) }
 
-    val color = Color.Blue
-
     Surface(
         shape = RoundedCornerShape(24.dp),
         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
@@ -72,7 +70,7 @@ fun QuizCardComponent(quizWithQuestsAndOptions: QuizWithQuestsAndOptions, modifi
                         .size(70.dp)
                         .align(alignment = Alignment.Center),
                     shape = RoundedCornerShape(50),
-                    color = color.copy(alpha = 0.15f)
+                    color = Color(quizWithQuestsAndOptions.quiz.color).copy(alpha = 0.15f)
 
                 ) {
                     Image(

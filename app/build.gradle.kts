@@ -79,4 +79,6 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("com.github.skydoves:colorpicker-compose:1.1.1")
 }

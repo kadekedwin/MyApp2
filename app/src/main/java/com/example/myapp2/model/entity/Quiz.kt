@@ -8,5 +8,5 @@ data class Quiz(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
     val icon: Int,
-//    val color: Color
+    val color: Int
 )
