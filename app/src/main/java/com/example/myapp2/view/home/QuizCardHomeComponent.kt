@@ -19,13 +19,12 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapp2.R
+import com.example.myapp2.model.entity.QuizWithQuestsAndOptions
 
 @Composable
-fun QuizCardHomeComponent(title: String, questionCount: Int, progress: Float, icon: Int, color: Color, modifier: Modifier = Modifier) {
+fun QuizCardHomeComponent(item: QuizWithQuestsAndOptions, modifier: Modifier = Modifier) {
     Surface(
         shape = RoundedCornerShape(24.dp),
         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.5f)),
@@ -43,36 +42,30 @@ fun QuizCardHomeComponent(title: String, questionCount: Int, progress: Float, ic
                 modifier = Modifier
                     .size(70.dp),
                 shape = RoundedCornerShape(50),
-                color = color.copy(alpha = 0.15f)
+                color = Color(item.quiz.color).copy(alpha = 0.15f)
                 
             ) {
                 Image(
                     painter = painterResource(
-                        id = icon,
+                        id = item.quiz.icon,
                     ),
                     contentDescription = null,
                     modifier = Modifier.padding(10.dp)
                 )
             }
 
-            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
-            Text(text = "$questionCount Question", modifier = Modifier.padding(top = 8.dp))
+            Text(text = item.quiz.title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 16.dp))
+            Text(text = "${item.quests.size} Question", modifier = Modifier.padding(top = 8.dp))
 
             Box(modifier = Modifier.padding(top = 16.dp)) {
                 LinearProgressIndicator(
-                    progress = { progress },
-                    trackColor = color.copy(alpha = 0.15f),
-                    color = color,
+                    progress = { 0.5f },
+                    trackColor = Color(item.quiz.color).copy(alpha = 0.15f),
+                    color = Color(item.quiz.color),
                     strokeCap = StrokeCap.Round,
                     modifier = Modifier.height(8.dp)
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun QuizCardComponentPreview() {
-    QuizCardHomeComponent(title = "Testo for quizo", questionCount = 10, progress = 0.5f, icon = R.drawable.stationery, color = Color.Blue)
 }
